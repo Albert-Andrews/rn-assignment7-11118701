@@ -18,7 +18,7 @@ const ProductItem = React.memo(({ item, addItem }) => (
         <Image style={styles.productImage} source={{ uri: item.image }} />
         <Image style={styles.iconAdd} source={require("../assets/add.png")} />
       </View>
-      <View>
+      <View style={styles.itemName}>
         <Text style={styles.itemName}>{item.name}</Text>
       </View>
       <View>
@@ -76,7 +76,9 @@ const Home = ({ navigation }) => {
 
   const addItem = useCallback((item) => {
     setCartItems((prevCartItems) => {
-      const itemExists = prevCartItems.some((cartItem) => cartItem.id === item.id);
+      const itemExists = prevCartItems.some(
+        (cartItem) => cartItem.id === item.id
+      );
       if (!itemExists) {
         return [...prevCartItems, item];
       }
@@ -90,9 +92,10 @@ const Home = ({ navigation }) => {
     });
   }, []);
 
-  const renderItem = useCallback(({ item }) => (
-    <ProductItem item={item} addItem={addItem} />
-  ), [addItem]);
+  const renderItem = useCallback(
+    ({ item }) => <ProductItem item={item} addItem={addItem} />,
+    [addItem]
+  );
 
   useEffect(() => {
     navigation.setOptions({
@@ -123,10 +126,18 @@ const Home = ({ navigation }) => {
           </View>
           <View style={styles.iconContainer}>
             <TouchableOpacity>
-              <Image style={styles.icon} source={require("../assets/icons8-search.png")} />
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons8-search.png")}
+              />
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Cart", { cartItems })}>
-              <Image style={styles.icon} source={require("../assets/shopping-bag.png")} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Cart", { cartItems })}
+            >
+              <Image
+                style={styles.icon}
+                source={require("../assets/shopping-bag.png")}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -135,8 +146,14 @@ const Home = ({ navigation }) => {
         <View style={styles.story}>
           <Text style={styles.storyText}>OUR STORY</Text>
           <View style={styles.iconContainer}>
-            <Image style={styles.icon} source={require("../assets/Listview.png")} />
-            <Image style={styles.icon} source={require("../assets/Filter.png")} />
+            <Image
+              style={styles.icon}
+              source={require("../assets/Listview.png")}
+            />
+            <Image
+              style={styles.icon}
+              source={require("../assets/Filter.png")}
+            />
           </View>
         </View>
 
@@ -238,7 +255,8 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: "bold",
+    marginBottom: 5,
   },
   itemDescription: {
     fontSize: 14,

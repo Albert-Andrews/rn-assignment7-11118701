@@ -49,15 +49,58 @@ const Details = ({ navigation, route }) => {
           <Text>{item?.category}</Text>
           <Text>{item?.description}</Text>
           <Text style={styles.itemPrice}>${item?.price}</Text>
-          <View>
-            <Text>Do not use bleach</Text>
-            <Text>Do not tumble dry</Text>
-            <Text>Dry clean with tetrachloroethylene</Text>
-            <Text>Iron at a maximum of 110oC/230oF</Text>
+          <View style={styles.infoConatiner}>
+            <View style={styles.info}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-no-bleach-32.png")}
+              />
+              <Text>Do not use bleach</Text>
+            </View>
+            <View style={styles.info}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-do-not-tumble-dry-80.png")}
+              />
+              <Text>Do not tumble dry</Text>
+            </View>
+
+            <View style={styles.info}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-wash-basin-64.png")}
+              />
+              <Text>Dry clean with tetrachloroethylene</Text>
+            </View>
+
+            <View style={styles.info}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-ironing-100.png")}
+              />
+              <Text>Iron at a maximum of 110oC/230oF</Text>
+            </View>
           </View>
           <View style={styles.hr} />
-          <View>
-            
+
+          <View style={styles.delivery}>
+            <View style={styles.deliveryContainer}>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-delivery-van-100.png")}
+              />
+              <View style={styles.deliveryText}>
+                <Text>Free Flat Rate Shipping</Text>
+                <Text>Estimated to be delivered on</Text>
+                <Text>09/11/2021 - 12/11/2021.</Text>
+              </View>
+            </View>
+            <View>
+              <Image
+                style={styles.icon}
+                source={require("../assets/icons/icons8-collapse-arrow-96.png")}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -130,5 +173,36 @@ const styles = StyleSheet.create({
   },
   itemPrice: {
     color: "red",
+  },
+  delivery: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  deliveryContainer: {
+    flexDirection: "row",
+    alignItems: "start",
+    gap: 10,
+    padding: 10,
+    borderRadius: 10,
+    borderColor: "gray",
+    borderWidth: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+  },
+  deliveryText: {
+    flexDirection: "column",
+    alignItems: "start",
+    gap: 10,
+  },
+  info: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  infoConatiner: {
+    flexDirection: "column",
+    alignItems: "start",
+    gap: 10,
   },
 });
