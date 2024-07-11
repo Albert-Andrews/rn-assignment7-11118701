@@ -69,13 +69,6 @@ const Cart = ({ route, navigation }) => {
     console.log("Checkout clicked!");
   };
 
-  // Call fetchApi when the user navigates to the cart page or adds an item to the cart
-  // For example:
-  const handleAddItem = (item) => {
-    setCartItems((prevCartItems) => [...prevCartItems, item]);
-    fetchApi();
-  };
-
   if (loading) {
     return <Text>Loading...</Text>;
   }
@@ -229,7 +222,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 150,
     borderRadius: 8,
-    resizeMode: "container",
+    resizeMode: "contain",
   },
   cartItemText: {
     flex: 1,
