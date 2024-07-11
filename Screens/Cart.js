@@ -62,8 +62,6 @@ const Cart = ({ route, navigation }) => {
     );
   }, []);
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
-
   const handleCheckout = () => {
     // Add navigation or checkout logic here
     console.log("Checkout clicked!");
@@ -98,33 +96,37 @@ const Cart = ({ route, navigation }) => {
           <View style={styles.cartContainer}>
             {cartItems.length > 0 ? (
               cartItems.map((item, index) => (
-                <View key={index} style={styles.cartItem}>
-                  <TouchableOpacity
-                    onPress={() => navigation.navigate("Details")}
-                  >
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => navigation.navigate("Details", { item })}
+                >
+                  <View style={styles.cartItem}>
                     <View style={styles.cartContainerImg}>
                       <Image
                         style={styles.productImage}
                         source={{ uri: item.image }}
                       />
                     </View>
-                  </TouchableOpacity>
 
-                  <View style={styles.cartItemText}>
-                    <Text style={styles.itemName}>{item.title}</Text>
-                    <Text style={styles.itemDescription}>{item.category}</Text>
-                    <Text style={styles.itemPrice}>${item.price}</Text>
+                    <View style={styles.cartItemText}>
+                      <Text style={styles.itemName}>{item.title}</Text>
+                      <Text style={styles.itemDescription}>
+                        {item.category}
+                      </Text>
+                      <Text style={styles.itemPrice}>${item.price}</Text>
+                    </View>
+
+                    <TouchableOpacity
+                      onPress={() => removeItem(item.id)}
+                      style={styles.iconContainer}
+                    >
+                      <Image
+                        style={styles.iconCancel}
+                        source={require("../assets/cancel.png")}
+                      />
+                    </TouchableOpacity>
                   </View>
-                  <TouchableOpacity
-                    onPress={() => removeItem(item.id)}
-                    style={styles.iconContainer}
-                  >
-                    <Image
-                      style={styles.iconCancel}
-                      source={require("../assets/cancel.png")}
-                    />
-                  </TouchableOpacity>
-                </View>
+                </TouchableOpacity>
               ))
             ) : (
               <Text style={styles.text}>Your Cart is Empty</Text>
@@ -135,7 +137,12 @@ const Cart = ({ route, navigation }) => {
         <View style={styles.checkOutSection}>
           <View style={styles.totalPrice}>
             <Text>EST TOTAL</Text>
-            <Text>${totalPrice.toFixed(2)}</Text>
+            <Text>
+              $
+              {cartItems
+                .reduce((total, item) => total + item.price, 0)
+                .toFixed(2)}
+            </Text>
           </View>
           <TouchableOpacity
             style={styles.checkOutButton}

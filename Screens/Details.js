@@ -1,3 +1,4 @@
+import React from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -6,9 +7,10 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React from "react";
 
-const Details = ({navigation}) => {
+const Details = ({ navigation, route }) => {
+  const { item } = route.params || {}; // Destructure item from route.params
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.subContainer}>
@@ -28,9 +30,7 @@ const Details = ({navigation}) => {
                 source={require("../assets/icons8-search.png")}
               />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Cart", { cartItems })}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
               <Image
                 style={styles.icon}
                 source={require("../assets/shopping-bag.png")}
@@ -38,8 +38,28 @@ const Details = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-       
 
+        {/* Render the item details */}
+        <View style={styles.detailsContainer}>
+          <View style={styles.imgContainer}>
+            <Image style={styles.productImage} source={{ uri: item?.image }} />
+          </View>
+
+          <Text>{item?.title}</Text>
+          <Text>{item?.category}</Text>
+          <Text>{item?.description}</Text>
+          <Text style={styles.itemPrice}>${item?.price}</Text>
+          <View>
+            <Text>Do not use bleach</Text>
+            <Text>Do not tumble dry</Text>
+            <Text>Dry clean with tetrachloroethylene</Text>
+            <Text>Iron at a maximum of 110oC/230oF</Text>
+          </View>
+          <View style={styles.hr} />
+          <View>
+            
+          </View>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -79,5 +99,36 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: "row",
     gap: 20,
+  },
+  productImage: {
+    width: 200,
+    height: 250,
+    resizeMode: "contain",
+    alignSelf: "center",
+    marginVertical: 20,
+  },
+  detailsContainer: {
+    justifyContent: "center",
+    alignItems: "start",
+    gap: 20,
+  },
+  imgContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 20,
+    marginTop: 10,
+  },
+  hr: {
+    borderBottomWidth: 1,
+    width: "90%",
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    borderColor: "gray",
+  },
+  itemPrice: {
+    color: "red",
   },
 });
