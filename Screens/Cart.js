@@ -109,10 +109,12 @@ const Cart = ({ route, navigation }) => {
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Details")}
                   >
-                    <Image
-                      style={styles.productImage}
-                      source={{ uri: item.image }}
-                    />
+                    <View style={styles.cartContainerImg}>
+                      <Image
+                        style={styles.productImage}
+                        source={{ uri: item.image }}
+                      />
+                    </View>
                   </TouchableOpacity>
 
                   <View style={styles.cartItemText}>
@@ -212,10 +214,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: "#ddd",
   },
-  productImage: {
+  cartContainerImg: {
     width: 150,
+    height: 200,
+    borderRadius: 8,
+    marginRight: 8,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  productImage: {
+    width: 120,
     height: 150,
     borderRadius: 8,
+    resizeMode: "container",
   },
   cartItemText: {
     flex: 1,
