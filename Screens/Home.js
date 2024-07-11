@@ -9,8 +9,25 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { items } from "../Mock/Items";
 import axios from "axios";
+
+const ProductItem = React.memo(({ item, addItem }) => (
+  <TouchableOpacity onPress={() => addItem(item)}>
+    <View style={styles.productContainer}>
+      <View style={styles.productContainerImg}>
+        <Image style={styles.productImage} source={{ uri: item.image }} />
+        <Image style={styles.iconAdd} source={require("../assets/add.png")} />
+      </View>
+      <View>
+        <Text style={styles.itemName}>{item.name}</Text>
+      </View>
+      <View>
+        <Text style={styles.itemDescription}>{item.category}</Text>
+        <Text style={styles.itemPrice}>${item.price}</Text>
+      </View>
+    </View>
+  </TouchableOpacity>
+));
 
 const Home = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -59,9 +76,7 @@ const Home = ({ navigation }) => {
 
   const addItem = useCallback((item) => {
     setCartItems((prevCartItems) => {
-      const itemExists = prevCartItems.some(
-        (cartItem) => cartItem.id === item.id
-      );
+      const itemExists = prevCartItems.some((cartItem) => cartItem.id === item.id);
       if (!itemExists) {
         return [...prevCartItems, item];
       }
@@ -74,6 +89,16 @@ const Home = ({ navigation }) => {
       return prevCartItems.filter((item) => item.id !== itemId);
     });
   }, []);
+
+  const renderItem = useCallback(({ item }) => (
+    <ProductItem item={item} addItem={addItem} />
+  ), [addItem]);
+
+  useEffect(() => {
+    navigation.setOptions({
+      removeItem,
+    });
+  }, [navigation, removeItem]);
 
   if (loading) {
     return (
@@ -98,20 +123,10 @@ const Home = ({ navigation }) => {
           </View>
           <View style={styles.iconContainer}>
             <TouchableOpacity>
-              <Image
-                style={styles.icon}
-                source={require("../assets/icons8-search.png")}
-              />
+              <Image style={styles.icon} source={require("../assets/icons8-search.png")} />
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Cart", { cartItems, removeItem })
-              }
-            >
-              <Image
-                style={styles.icon}
-                source={require("../assets/shopping-bag.png")}
-              />
+            <TouchableOpacity onPress={() => navigation.navigate("Cart", { cartItems })}>
+              <Image style={styles.icon} source={require("../assets/shopping-bag.png")} />
             </TouchableOpacity>
           </View>
         </View>
@@ -120,14 +135,8 @@ const Home = ({ navigation }) => {
         <View style={styles.story}>
           <Text style={styles.storyText}>OUR STORY</Text>
           <View style={styles.iconContainer}>
-            <Image
-              style={styles.icon}
-              source={require("../assets/Listview.png")}
-            />
-            <Image
-              style={styles.icon}
-              source={require("../assets/Filter.png")}
-            />
+            <Image style={styles.icon} source={require("../assets/Listview.png")} />
+            <Image style={styles.icon} source={require("../assets/Filter.png")} />
           </View>
         </View>
 
@@ -135,34 +144,9 @@ const Home = ({ navigation }) => {
         <View style={styles.products}>
           <FlatList
             data={cartItems}
-            key={numColumns}
-            renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => addItem(item)}>
-                <View style={styles.productContainer}>
-                  <View style={styles.productContainerImg}>
-                    <Image
-                      style={styles.productImage}
-                      source={{ uri: item.image }}
-                    />
-                    <Image
-                      style={styles.iconAdd}
-                      source={require("../assets/add.png")}
-                    />
-                  </View>
-                </View>
-
-                <View>
-                  <Text style={styles.itemName}>{item.name}</Text>
-                </View>
-
-                <View>
-                  <Text style={styles.itemDescription}>{item.category}</Text>
-                  <Text style={styles.itemPrice}>${item.price}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-            columnWrapperStyle={styles.columnWrapper}
             keyExtractor={(item) => item.id.toString()}
+            renderItem={renderItem}
+            columnWrapperStyle={styles.columnWrapper}
             numColumns={numColumns}
             showsVerticalScrollIndicator={false}
           />
@@ -218,7 +202,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginBottom: 10, // Optional: to add space between rows
   },
-
   productContainer: {
     justifyContent: "center",
     gap: 10,
