@@ -6,7 +6,7 @@ const Details = () => {
     <SafeAreaView>
       <View>
         <View>
-          <Image source={{ uri: item.image }} />
+        <Text></Text>
         </View>
       </View>
     </SafeAreaView>
