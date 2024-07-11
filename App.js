@@ -2,9 +2,9 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Home from "./Screens/Home";
-import Cart from "./Screens/Cart";
-import Details from "./Screens/Details";
+import HomeScreen from "./Screens/Home";
+import CartScreen from "./Screens/Cart";
+import DetailsScreen from "./Screens/Details";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -13,9 +13,9 @@ const Drawer = createDrawerNavigator();
 function MainStackNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="Details" component={Details} />
+      <Stack.Screen name="MainHome" component={HomeScreen} />
+      <Stack.Screen name="MainCart" component={CartScreen} />
+      <Stack.Screen name="MainDetails" component={DetailsScreen} />
     </Stack.Navigator>
   );
 }
@@ -24,12 +24,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Home"
         screenOptions={{ headerShown: false }}
+        initialRouteName="MainHome"
       >
         <Drawer.Screen name="Home" component={MainStackNavigator} />
-        <Drawer.Screen name="Cart" component={Cart} />
-        <Drawer.Screen name="Details" component={Details} />
+        <Drawer.Screen name="Cart" component={CartScreen} />
+        <Drawer.Screen name="Details" component={DetailsScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
