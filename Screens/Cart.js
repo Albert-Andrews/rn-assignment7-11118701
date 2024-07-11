@@ -33,20 +33,17 @@ const Cart = ({ route, navigation }) => {
     initCartItems();
   }, [route.params]);
 
-  useEffect(() => {
-    const fetchApi = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        setCartItems(response.data);
-      } catch (error) {
-        console.error("Error fetching products", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchApi();
-  }, []);
+  const fetchApi = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get("https://fakestoreapi.com/products");
+      // Do something with the response data, e.g., display it in a list
+    } catch (error) {
+      console.error("Error fetching products", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     async function saveCartItems() {
@@ -71,6 +68,17 @@ const Cart = ({ route, navigation }) => {
     // Add navigation or checkout logic here
     console.log("Checkout clicked!");
   };
+
+  // Call fetchApi when the user navigates to the cart page or adds an item to the cart
+  // For example:
+  const handleAddItem = (item) => {
+    setCartItems((prevCartItems) => [...prevCartItems, item]);
+    fetchApi();
+  };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -166,7 +174,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
   },
   headerTextContainer: {
-    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   headerText: {
     fontSize: 24,

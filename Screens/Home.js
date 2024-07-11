@@ -139,7 +139,7 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => addItem(item)}>
                 <View style={styles.productContainer}>
-                  <View>
+                  <View style={styles.productContainerImg}>
                     <Image
                       style={styles.productImage}
                       source={{ uri: item.image }}
@@ -149,17 +149,15 @@ const Home = ({ navigation }) => {
                       source={require("../assets/add.png")}
                     />
                   </View>
+                </View>
 
-                  <View>
-                    <Text style={styles.itemName}>{item.name}</Text>
-                  </View>
+                <View>
+                  <Text style={styles.itemName}>{item.name}</Text>
+                </View>
 
-                  <View>
-                    <Text style={styles.itemDescription}>
-                      {item.category}
-                    </Text>
-                    <Text style={styles.itemPrice}>${item.price}</Text>
-                  </View>
+                <View>
+                  <Text style={styles.itemDescription}>{item.category}</Text>
+                  <Text style={styles.itemPrice}>${item.price}</Text>
                 </View>
               </TouchableOpacity>
             )}
@@ -227,9 +225,18 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: 20,
   },
-  productImage: {
+  productContainerImg: {
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 10,
+    backgroundColor: "white",
+    height: 300,
     width: 200,
-    height: 250,
+  },
+  productImage: {
+    width: 150,
+    height: 300,
     resizeMode: "center",
     backgroundColor: "white",
   },
