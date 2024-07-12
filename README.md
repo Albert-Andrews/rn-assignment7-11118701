@@ -1,94 +1,89 @@
-ADD TO CART FUNCTIONALITY
-
-The addItem function is used to add items to the cart. When an item is pressed, the addItem function is called with the item as an argument. This function checks if the item already exists in the cart using the some method. If the item does not exist, it is added to the cart by updating the cartItems state.
-
-const addItem = useCallback((item) => {
-  setCartItems((prevCartItems) => {
-    const itemExists = prevCartItems.some((cartItem) => cartItem.id === item.id);
-    if (!itemExists) {
-      return [...prevCartItems, item];
-    }
-    return prevCartItems;
-  });
-}, []);
-
-DISPLAYING THE LIST ITEMS
-
-The list of items is displayed using a FlatList component. The data prop is set to the items array, which is imported from the ../Mock/Items file. The renderItem prop is a function that returns a TouchableOpacity component for each item in the list. When an item is pressed, the addItem function is called with the item as an argument.
-
-<FlatList
-  data={items}
-  key={numColumns}
-  renderItem={({ item }) => (
-    <TouchableOpacity onPress={() => addItem(item)}>
-      <View style={styles.productContainer}>
-        {/* item details */}
-      </View>
-    </TouchableOpacity>
-  )}
-  columnWrapperStyle={styles.columnWrapper}
-  keyExtractor={(item) => item.id}
-  numColumns={numColumns}
-  showsVerticalScrollIndicator={false}
-/>
-
-CART ITEMS STORAGE
-
-The cart items are stored in the device's storage using AsyncStorage. When the component mounts, the getCartItems function is called to retrieve the stored cart items and update the cartItems state. When the cartItems state changes, the saveCartItems function is called to save the updated cart items to the storage.
-
-NAVIGATION TO CART SCREEN
-
-When the shopping bag icon is pressed, the app navigates to the Cart screen, passing the cartItems and removeItem functions as props. The removeItem function is used to remove items from the cart.
-
-<TouchableOpacity
-  onPress={() => navigation.navigate("Cart", { cartItems, removeItem })}
->
-  <Image
-    style={styles.icon}
-    source={require("../assets/shopping-bag.png")}
-  />
-</TouchableOpacity>
-
-IMPORTANT NOTES
-
-Make sure to import the items array from the correct file.
-The addItem and removeItem functions are memoized using useCallback to prevent unnecessary re-renders.
-The cartItems state is updated using the setCartItems function, which is called with a callback function that returns the updated cart items.
-The AsyncStorage functions are called with try-catch blocks to handle any errors that may occur.
-![alt text](<assets/Screenshot 2024-07-03 at 5.58.57 PM.png>)
-
-
-
-
-
-
-Cart Component 
+OpenFashion Mobile App
 
 Overview
-The Cart component is a React Native component that displays a user's shopping cart. It retrieves the cart items from AsyncStorage and allows the user to remove items from the cart. The component also calculates the total price of the items in the cart and provides a checkout button.
+
+OpenFashion is a React Native-based mobile application designed for fashion enthusiasts to explore, add to cart, and purchase fashion products. This app features a user-friendly interface, product listing, detailed product descriptions, cart management, and a checkout system. The app leverages AsyncStorage for local data persistence and Axios for API requests to fetch product data.
 
 Features
-Retrieves cart items from AsyncStorage
-Displays cart items with product image, name, description, and price
-Allows user to remove items from the cart
-Calculates the total price of the items in the cart
-Provides a checkout button
 
-Props
-route: The route object passed from the navigation system
-navigation: The navigation object passed from the navigation system
+Home Screen: Displays a list of fashion products fetched from an API.
+Product Details: Detailed view of a selected product, including images, descriptions, price, and care instructions.
+Cart Management: Add and remove products from the cart, view cart items, and proceed to checkout.
+Persistent Cart: Cart items are saved locally using AsyncStorage, ensuring they persist across app sessions.
+Screens
+
+Home: Displays a grid of products with images, names, categories, and prices. Users can add products to their cart.
+Details: Shows detailed information about a selected product.
+Cart: Shows products added to the cart, with the ability to remove items and proceed to checkout.
+Technologies Used
+
+React Native: For building the mobile application.
+AsyncStorage: For local storage of cart items.
+Axios: For making API requests to fetch product data.
+React Navigation: For navigation between screens.
+Installation
+
+Clone the Repository:
+
+bash
+Copy code
+git clone https://github.com/Albert-Andrews/rn-assignment7-11118701.git
+cd openfashion
+Install Dependencies:
+
+bash
+Copy code
+npm install
+Running the App:
+
+For iOS:
+bash
+Copy code
+npx pod-install ios
+npm run ios
+For Android:
+bash
+Copy code
+npm run android
+Usage
+
+Home Screen
+Fetch Products: On initial load, products are fetched from https://fakestoreapi.com/products and displayed in a grid format.
+Add to Cart: Tap on a product to add it to the cart. An icon overlay indicates that the product can be added.
+Details Screen
+Product Information: Displays detailed information about the selected product, including title, category, description, price, and care instructions.
+Care Instructions: Specific icons and texts provide care instructions for the product.
+Cart Screen
+View Cart Items: Displays a list of products added to the cart.
+Remove Items: Tap the cancel icon to remove an item from the cart.
+Checkout: View the estimated total price and proceed to checkout.
+Contribution
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
+License
+
+This project is licensed under the MIT License.
+
+Contact
+
+For any inquiries, please contact [aaaquaye001@st.ug.edu.gh].
 
 
-State
-cartItems: An array of cart items, initialized to an empty array
+#Dtails Page
+![alt text](<assets/Simulator Screenshot - iPhone 15 Pro Max - 2024-07-11 at 18.47.20.png>)
 
 
-Effects
-useEffect with initCartItems function: Retrieves cart items from AsyncStorage and sets the cartItems state
+#Home
+![alt text](<assets/Simulator Screenshot - iPhone 15 Pro Max - 2024-07-12 at 18.34.52.png>)
 
-useEffect with saveCartItems function: Saves the cartItems state to AsyncStorage
 
-useCallback with removeItem function: Removes an item from the cartItems state
-![alt text](<assets/Screenshot 2024-07-03 at 6.32.09 PM.png>)
-![alt text](<assets/Screenshot 2024-07-03 at 6.31.56 PM.png>)
+#Drawer
+![alt text](<assets/Simulator Screenshot - iPhone 15 Pro Max - 2024-07-12 at 18.35.01.png>)
 
+#Cart
+![alt text](<assets/Simulator Screenshot - iPhone 15 Pro Max - 2024-07-12 at 18.35.49.png>)
+
+
+#Loadin state
+![alt text](<assets/Simulator Screenshot - iPhone 15 Pro Max - 2024-07-12 at 18.42.17.png>)
